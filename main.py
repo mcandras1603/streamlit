@@ -29,8 +29,8 @@ from statsmodels.tools.eval_measures import rmse
 import pickle
 import joblib
 
-best_model = joblib.load(r'C:\xampp\htdocs\streamlit\FK_lstm100_70p.joblib')
-data = pd.read_csv(r"C:\xampp\htdocs\streamlit\data_penjualan_barang_lengkap.csv")
+best_model = joblib.load('FK_lstm100_70p.joblib')
+data = pd.read_csv("data_penjualan_barang_lengkap.csv")
 obat = "FOLDA KAPLET@30"
 step = 5
 
