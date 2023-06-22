@@ -245,6 +245,6 @@ def lstm_model_100(test_data):
     plt.xticks(rotation=45)
     plt.legend()
     plt.show()
+    st.pyplot(plt)
 
 lstm_model_100(test)
-st.plot(plt)
