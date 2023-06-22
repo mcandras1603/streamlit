@@ -31,7 +31,6 @@ import joblib
 
 best_model = joblib.load('FK_lstm100_70p.joblib')
 data = pd.read_csv("data_penjualan_barang_lengkap.csv")
-obat = "FOLDA KAPLET@30"
 step = 5
 
 # drop baris menjadi 0
@@ -47,7 +46,7 @@ data.drop('tanggal', inplace=True, axis=1)
 
 # Fokus Data
 data = data[(data['jenis'] == "Vitamin & Food Suplement")]
-data = data[(data['nama'] == obat)]
+data = data[(data['nama'] == "FOLDA KAPLET@30")]
 data = data[(data['date'] >= "2018-11-14") & (data['date'] <= "2021-06-21")]
 
 # Weekly Data
