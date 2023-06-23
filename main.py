@@ -165,13 +165,14 @@ def lstm_model_100(test_data):
 
     fig, ax = plt.subplots(figsize=(20, 12))
 
-    plt.plot(original_df['date'].dt.strftime('%Y-%m-%d'), original_df['profit'], label='Aktual', color='green', marker='o')
+    original_dates = pd.to_datetime(original_df['date'], format='%Y-%m-%d', errors='coerce')  # Convert to datetime type
+    plt.plot(original_dates, original_df['profit'], label='Aktual', color='green', marker='o')
 
-    future_dates = unscaled_df['date'].tail(future_steps)
+    future_dates = pd.to_datetime(unscaled_df['date'].tail(future_steps), format='%Y-%m-%d', errors='coerce')  # Convert to datetime type
     future_values = unscaled_df['pred_value'].tail(future_steps)
     plt.plot(future_dates, future_values, label='Prediksi Masa Depan', color='orange', marker='o')
 
-    plt.plot([original_df['date'].iloc[-1].strftime('%Y-%m-%d'), future_dates.iloc[0]],
+    plt.plot([original_dates.iloc[-1], future_dates.iloc[0]],
              [original_df['profit'].iloc[-1], future_values.iloc[0]],
              linestyle='solid', color='orange')
 
