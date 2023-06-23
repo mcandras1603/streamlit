@@ -142,7 +142,7 @@ def lstm_model_100(test_data):
         unscaled[unscaled <= 0] = 0
     unscaled_df = predict_df(unscaled, original_df)
 
-    # Prediksi future steps 4 hari
+    # Prediksi future steps 5 hari
     future_steps = 5
     last_prediction = unscaled[-1][0]
 
@@ -175,6 +175,7 @@ def lstm_model_100(test_data):
     plt.plot([original_dates.iloc[-1], future_dates.iloc[0]],
              [original_df['profit'].iloc[-1], future_values.iloc[0]],
              linestyle='solid', color='orange')
+    st.write(unscaled_df.tail(5))
 
     ax.set_xlabel('Tanggal')
     ax.set_ylabel('Juta (Rupiah)')
