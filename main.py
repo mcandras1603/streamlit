@@ -154,13 +154,13 @@ def scale_data(test_set):
     #apply Min Max Scaler
     scaler = MinMaxScaler()
     scaler = scaler.fit(test_set)
-        
+
     # reshape test set
     test_set = test_set.reshape(test_set.shape[0], test_set.shape[1])
     test_set_scaled = scaler.transform(test_set)
-        
-        st, y_test = test_set_scaled[:, 1:], test_set_scaled[:, 0:1].ravel()
-        
+
+    X_test, y_test = test_set_scaled[:, 1:], test_set_scaled[:, 0:1].ravel()
+
     return X_test, y_test, scaler
         
 #Denormalisasi
