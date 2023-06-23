@@ -39,6 +39,7 @@ st.sidebar.write("Range nilai stok = 0 - Ratuan")
 
 if st.sidebar.button("Forecast"):
     # Memproses input jika tombol "Run" ditekan
+    button_pressed = True
     input_text = st.sidebar.text_input("Masukkan 20 angka dipisahkan oleh koma:")
     option = st.sidebar.selectbox("Pilih Model", ["FOLDA-STOK", "FOLDA-PROFIT", 
                                           "OBDHAMIN-STOK", "OBDHAMIN-PROFIT", 
