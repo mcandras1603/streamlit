@@ -29,12 +29,87 @@ from statsmodels.tools.eval_measures import rmse
 import pickle
 import joblib
 
-best_model = joblib.load('FK_lstm100_70p.pkl')
-#model : obat FOLDA KAPLET@30
-#20 data
-pro = [50000, 210000, 36000, 52000, 102100, 1900201, 20001, 15040 ,270210 ,401201, 60809, 5110819, 111213, 9808, 86998, 567260, 18788, 56732, 60887, 5062716]
+import streamlit as st
+
+st.sidebar.title("MENU")
+
+#Masukkan Input
+st.sidebar.write("Range nilai profit = 0 - Jutaan")
+st.sidebar.write("Range nilai stok = 0 - Ratuan")
+
+if st.sidebar.button("Forecast"):
+    # Memproses input jika tombol "Run" ditekan
+    input_text = st.sidebar.text_input("Masukkan 20 angka dipisahkan oleh koma:")
+    option = st.sidebar.selectbox("Pilih Model", ["FOLDA-STOK", "FOLDA-PROFIT", 
+                                          "OBDHAMIN-STOK", "OBDHAMIN-PROFIT", 
+                                          "OBICAL-STOK", "OBICAL-PROFIT", 
+                                          "SOLANEURON-STOK", "SOLANEURON-PROFIT", 
+                                          "VITACIMIN-STOK", "VITACMIN-PROFIT"])
+    
+    if input_text and option:
+        # Memproses input jika semua kondisi terpenuhi
+        angka = [int(num.strip()) for num in input_text.split(",")]
+        st.write("Angka yang dimasukkan:", angka)
+        
+        if option == "FOLDA-STOK":
+            st.sidebar.write("Opsi yang dipilih: FOLDA-STOK")
+            label_y = 'Jumlah (Ratusan)'
+            label_title = 'Peramalan Stok Folda'
+            best_model = joblib.load('FK_lstm100_70s.pkl')
+        elif option == "FOLDA-PROFIT":
+            st.sidebar.write("Opsi yang dipilih: FOLDA-PROFIT")
+            label_y = 'Juta (Rupiah)'
+            label_title = 'Peramalan Profit Folda'
+            best_model = joblib.load('FK_lstm100_70p.pkl')
+        elif option == "OBDHAMIN-STOK":
+            st.sidebar.write("Opsi yang dipilih: OBDHAMIN-STOK")
+            label_y = 'Jumlah (Ratusan)'
+            label_title = 'Peramalan Stok Obdhamin'
+            best_model = joblib.load('OK_lstm100_70s.pkl')
+        elif option == "OBDHAMIN-PROFIT":
+            st.sidebar.write("Opsi yang dipilih: OBDHAMIN-PROFIT")
+            label_y = 'Juta (Rupiah)'
+            label_title = 'Peramalan Profit Obdhamin'
+            best_model = joblib.load('OK_lstm100_70p.pkl')
+        elif option == "OBICAL-STOK":
+            st.sidebar.write("Opsi yang dipilih: OBICAL-STOK")
+            label_y = 'Jumlah (Ratusan)'
+            label_title = 'Peramalan Stok Obical'
+            best_model = joblib.load('OT_lstm50_70s.pkl')
+        elif option == "OBICAL-PROFIT":
+            st.sidebar.write("Opsi yang dipilih: OBICAL-PROFIT")
+            label_y = 'Juta (Rupiah)'
+            label_title = 'Peramalan Profit Obical'
+            best_model = joblib.load('OT_lstm50_70p.pkl')
+        elif option == "SOLANEURON-STOK":
+            st.sidebar.write("Opsi yang dipilih: SOLANEURON-STOK")
+            label_y = 'Jumlah (Ratusan)'
+            label_title = 'Peramalan Stok Solaneuron'
+            best_model = joblib.load('SK_lstm100_70s.pkl')
+        elif option == "SOLANEURON-PROFIT":
+            st.sidebar.write("Opsi yang dipilih: SOLANEURON-PROFIT")
+            label_y = 'Juta (Rupiah)'
+            label_title = 'Peramalan Profit Solaneuron'
+            best_model = joblib.load('SK_lstm100_70p.pkl')
+        elif option == "VITACIMIN-STOK":
+            st.sidebar.write("Opsi yang dipilih: VITACIMIN-STOK")
+            label_y = 'Jumlah (Ratusan)'
+            label_title = 'Peramalan Stok Vitacimin'
+            best_model = joblib.load('VS_lstm50_70s.pkl')
+        elif option == "VITACIMIN-PROFIT":
+            st.sidebar.write("Opsi yang dipilih: VITACIMIN-PROFIT")
+            label_y = 'Juta (Rupiah)'
+            label_title = 'Peramalan Profit Vitacimin'
+            best_model = joblib.load('VS_lstm50_70p.pkl')
+    else:
+        st.sidebar.write("Angka yang anda masukkan kurang atau anda belum memilih option")
+if not button_pressed:
+    st.write("Silakan tekan tombol 'Forecast' untuk mendapatkan hasil")
+
+#pro = [50000, 210000, 36000, 52000, 102100, 1900201, 20001, 15040 ,270210 ,401201, 60809, 5110819, 111213, 9808, 86998, 567260, 18788, 56732, 60887, 5062716]
 tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-data = pd.DataFrame({'date': tgl, 'profit':pro})
+
+data = pd.DataFrame({'date': tgl, 'profit':angka})
 original = data
 
 #stasionery
@@ -129,7 +204,7 @@ def predict_df(unscaled_predictions, original_df):
     df_result = pd.DataFrame(result_list)
     return df_result
 
-#st.title('Forecasting Time Series LSTM MODEL')
+st.title('Forecasting Time Series Profit dan Stok Apotek XYZ')
 #LSTM MODEL
 def lstm_model_100(test_data):
     X_test, y_test, scaler_object = scale_data(test_data)
@@ -175,11 +250,13 @@ def lstm_model_100(test_data):
     plt.plot([original_dates.iloc[-1], future_dates.iloc[0]],
              [original_df['profit'].iloc[-1], future_values.iloc[0]],
              linestyle='solid', color='orange')
+    st.write("Hasil Peramalan Masa Depan")
     st.write(unscaled_df.tail(5))
+    st.write("Grafik Peramalan Masa Depan")
 
     ax.set_xlabel('Tanggal')
-    ax.set_ylabel('Juta (Rupiah)')
-    ax.set_title('Prediksi Profit FOLDA KAPLET@30 Model LSTM')
+    ax.set_ylabel(label_y)
+    ax.set_title(label_title)
 
     plt.xticks(rotation=45)
     plt.legend()
