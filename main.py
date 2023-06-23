@@ -114,9 +114,9 @@ if not button_pressed:
     st.write("Silakan tekan tombol 'Forecast' untuk mendapatkan hasil")
 
 #pro = [50000, 210000, 36000, 52000, 102100, 1900201, 20001, 15040 ,270210 ,401201, 60809, 5110819, 111213, 9808, 86998, 567260, 18788, 56732, 60887, 5062716]
-#tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-#data = pd.DataFrame({'date': tgl, 'profit':input_text})
-#original = data
+tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
+data = pd.DataFrame({'date': tgl, 'profit':input_text})
+original = data
         
 #stasionery
 def get_diff(data):
@@ -124,7 +124,7 @@ def get_diff(data):
     data = data.dropna()
     return data
         
-stationary_df = get_diff(data)
+    stationary_df = get_diff(data)
         
 #create dataframe for transformation from time series to supervised
 def generate_supervised(data):
