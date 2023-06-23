@@ -29,7 +29,7 @@ from statsmodels.tools.eval_measures import rmse
 import pickle
 import joblib
 
-best_model = joblib.load('FK_lstm100_70p.joblib')
+best_model = joblib.load('FK_lstm100_70p.pkl')
 #model : obat FOLDA KAPLET@30
 #20 data
 pro = [50000, 210000, 36000, 52000, 102100, 1900201, 20001, 15040 ,270210 ,401201, 60809, 5110819, 111213, 9808, 86998, 567260, 18788, 56732, 60887, 5062716]
