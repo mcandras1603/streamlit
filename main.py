@@ -148,7 +148,7 @@ def lstm_model_100(test_data):
 
     future_predictions = []
     for i in range(future_steps):
-        non_zero_elements = [elem for elem in unscaled[i] if elem != 0]
+        non_zero_elements = [elem for elem in unscaled[:, i] if elem != 0]
         if non_zero_elements:
             prediction = last_prediction + non_zero_elements[0]
         else:
@@ -157,30 +157,23 @@ def lstm_model_100(test_data):
         last_prediction = prediction
 
     last_date = unscaled_df['date'].iloc[-1]
-    date_range = pd.date_range(last_date, periods=future_steps+1, freq='W-MON')[1:]  # Generate rentang tanggal future steps
-    date_strings = [str(date) for date in date_range]
+    date_range = pd.date_range(start=last_date, periods=future_steps+1, freq='W-MON')[1:]
+    date_strings = [date.strftime('%Y-%m-%d') for date in date_range]  # Convert dates to strings with format 'YYYY-MM-DD'
 
     future_df = pd.DataFrame({'date': date_strings, 'pred_value': future_predictions})
     unscaled_df = pd.concat([unscaled_df, future_df], ignore_index=True)
 
-    original_df['date'] = pd.to_datetime(original_df['date'])
-    unscaled_df['date'] = pd.to_datetime(unscaled_df['date'])
     fig, ax = plt.subplots(figsize=(20, 12))
 
-    sns.lineplot(x=original_df['date'], y=original_df['profit'], data=original_df, ax=ax,
-                label='Aktual', color='green', marker='o')
+    plt.plot(original_df['date'].dt.strftime('%Y-%m-%d'), original_df['profit'], label='Aktual', color='green', marker='o')
 
-    original_df['date'] = original_df['date']
-    unscaled_df['date'] = unscaled_df['date']
-
-    future_dates = pd.date_range(last_date, periods=future_steps+1, freq='W-MON')[1:]
+    future_dates = unscaled_df['date'].tail(future_steps)
     future_values = unscaled_df['pred_value'].tail(future_steps)
-    sns.lineplot(x=future_dates, y=future_values, ax=ax, label='Prediksi Masa Depan', color='orange', marker='o')
-    print(unscaled_df.tail(5))
+    plt.plot(future_dates, future_values, label='Prediksi Masa Depan', color='orange', marker='o')
 
-    sns.lineplot(x=[original_df['date'].iloc[-1], future_dates[0]],
-                  y=[original_df['profit'].iloc[-1], future_values.iloc[0]],
-                  ax=ax, linestyle='solid', color='orange')
+    plt.plot([original_df['date'].iloc[-1].strftime('%Y-%m-%d'), future_dates.iloc[0]],
+             [original_df['profit'].iloc[-1], future_values.iloc[0]],
+             linestyle='solid', color='orange')
 
     ax.set_xlabel('Tanggal')
     ax.set_ylabel('Juta (Rupiah)')
@@ -188,6 +181,7 @@ def lstm_model_100(test_data):
 
     plt.xticks(rotation=45)
     plt.legend()
+    plt.show()
     st.pyplot(plt)
 
 lstm_model_100(test)
