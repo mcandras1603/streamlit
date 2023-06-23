@@ -65,22 +65,22 @@ if st.sidebar.button("Forecast"):
             st.sidebar.write("Opsi yang dipilih: OBDHAMIN-STOK")
             label_y = 'Jumlah (Ratusan)'
             label_title = 'Peramalan Stok Obdhamin'
-            best_model = joblib.load('OK_lstm100_70s.pkl')
+            best_model = joblib.load('OK_lstm50_70s.pkl')
         elif option == "OBDHAMIN-PROFIT":
             st.sidebar.write("Opsi yang dipilih: OBDHAMIN-PROFIT")
             label_y = 'Juta (Rupiah)'
             label_title = 'Peramalan Profit Obdhamin'
-            best_model = joblib.load('OK_lstm100_70p.pkl')
+            best_model = joblib.load('OK_lstm50_70p.pkl')
         elif option == "OBICAL-STOK":
             st.sidebar.write("Opsi yang dipilih: OBICAL-STOK")
             label_y = 'Jumlah (Ratusan)'
             label_title = 'Peramalan Stok Obical'
-            best_model = joblib.load('OT_lstm50_70s.pkl')
+            best_model = joblib.load('OT_lstm100_70s.pkl')
         elif option == "OBICAL-PROFIT":
             st.sidebar.write("Opsi yang dipilih: OBICAL-PROFIT")
             label_y = 'Juta (Rupiah)'
             label_title = 'Peramalan Profit Obical'
-            best_model = joblib.load('OT_lstm50_70p.pkl')
+            best_model = joblib.load('OT_lstm100_70p.pkl')
         elif option == "SOLANEURON-STOK":
             st.sidebar.write("Opsi yang dipilih: SOLANEURON-STOK")
             label_y = 'Jumlah (Ratusan)'
