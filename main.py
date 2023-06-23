@@ -32,10 +32,10 @@ import joblib
 import streamlit as st
 
 st.sidebar.title("MENU")
-
 #Masukkan Input
 st.sidebar.write("Range nilai profit = 0 - Jutaan")
 st.sidebar.write("Range nilai stok = 0 - Ratuan")
+button_pressed = False
 
 if st.sidebar.button("Forecast"):
     # Memproses input jika tombol "Run" ditekan
