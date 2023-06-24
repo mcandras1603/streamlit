@@ -132,7 +132,7 @@ if st.sidebar.button("Forecast"):
         data = data.dropna()
         return data
             
-        stationary_df = get_diff(data)
+    stationary_df = get_diff(data)
             
     #create dataframe for transformation from time series to supervised
     def generate_supervised(data):
