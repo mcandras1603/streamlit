@@ -44,7 +44,7 @@ converted_list = input_angka.split(",")
 angka_list = []
 for convert in converted_list:
     try:
-        angka_list.append(int(covert.strip()))
+        angka_list.append(int(convert.strip()))
     except ValueError:
         pass
 
