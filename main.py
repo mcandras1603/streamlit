@@ -36,7 +36,6 @@ st.sidebar.write("Range nilai profit = 0 - Jutaan")
 st.sidebar.write("Range nilai stok = 0 - Ratuan")
 
 #pro = [50000, 210000, 36000, 52000, 102100, 1900201, 20001, 15040 ,270210 ,401201, 60809, 5110819, 111213, 9808, 86998, 567260, 18788, 56732, 60887, 5062716]
-tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
 
 #Input angka
 input_angka = st.sidebar.text_input("Masukkan 20 angka dipisahkan oleh koma:")
@@ -65,80 +64,60 @@ if st.sidebar.button("Forecast"):
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Folda'
         best_model = joblib.load('FK_lstm100_70s.pkl')
-        tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-        data = pd.DataFrame({'date': tgl, 'profit':angka_list})
         
     elif angka_list and option == "FOLDA-PROFIT":
         st.sidebar.write("Opsi yang dipilih: FOLDA-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Folda'
         best_model = joblib.load('FK_lstm100_70p.pkl')
-        tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-        data = pd.DataFrame({'date': tgl, 'profit':angka_list})
 
     elif angka_list and option == "OBDHAMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obdhamin'
         best_model = joblib.load('OK_lstm50_70s.pkl')
-        tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-        data = pd.DataFrame({'date': tgl, 'profit':angka_list})
     
     elif angka_list and option == "OBDHAMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Obdhamin'
         best_model = joblib.load('OK_lstm50_70p.pkl')
-        tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-        data = pd.DataFrame({'date': tgl, 'profit':angka_list})
     
     elif angka_list and option == "OBICAL-STOK":
         st.sidebar.write("Opsi yang dipilih: OBICAL-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obical'
         best_model = joblib.load('OT_lstm100_70s.pkl')
-        tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-        data = pd.DataFrame({'date': tgl, 'profit':angka_list})
     
     elif angka_list and option == "OBICAL-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBICAL-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Obical'
         best_model = joblib.load('OT_lstm100_70p.pkl')
-        tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-        data = pd.DataFrame({'date': tgl, 'profit':angka_list})
     
     elif angka_list and option == "SOLANEURON-STOK":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Solaneuron'
         best_model = joblib.load('SK_lstm100_70s.pkl')
-        tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-        data = pd.DataFrame({'date': tgl, 'profit':angka_list})
     
     elif angka_list and option == "SOLANEURON-PROFIT":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Solaneuron'
         best_model = joblib.load('SK_lstm100_70p.pkl')
-        tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-        data = pd.DataFrame({'date': tgl, 'profit':angka_list})
     
     elif angka_list and option == "VITACIMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Vitacimin'
         best_model = joblib.load('VS_lstm50_70s.pkl')
-        tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-        data = pd.DataFrame({'date': tgl, 'profit':angka_list})
     
     elif angka_list and option == "VITACIMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Vitacimin'
         best_model = joblib.load('VS_lstm50_70p.pkl')
-        tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-        data = pd.DataFrame({'date': tgl, 'profit':angka_list})
 
     tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
     data = pd.DataFrame({'date': tgl, 'profit':angka_list})
