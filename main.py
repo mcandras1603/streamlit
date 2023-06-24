@@ -43,7 +43,12 @@ input_angka = st.sidebar.text_input("Masukkan 20 angka dipisahkan oleh koma:")
 angka_list = input_angka.split(",")
 if len(angka_list) != 20:
     st.warning("Mohon masukkan 20 angka dipisahkan dengan koma.")
-angka_list = [int(angka.strip()) for angka in angka_list]
+angka_list = []
+for angka in angka_list:
+    try:
+        angka_list.append(int(angka.strip()))
+    except ValueError:
+        pass
 
 #pilih model
 option = st.sidebar.selectbox("Pilih Model", ["FOLDA-STOK", "FOLDA-PROFIT", 
