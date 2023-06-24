@@ -46,7 +46,7 @@ for angka in angka_list:
         angka_list.append(int(angka.strip()))
     except ValueError:
         pass
-
+st.write(angka_list)
 #pilih model
 option = st.sidebar.selectbox("Pilih Model", ["FOLDA-STOK", "FOLDA-PROFIT", 
                             "OBDHAMIN-STOK", "OBDHAMIN-PROFIT", 
