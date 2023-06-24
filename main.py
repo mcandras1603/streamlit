@@ -41,8 +41,6 @@ tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021
 #Input angka
 input_angka = st.sidebar.text_input("Masukkan 20 angka dipisahkan oleh koma:")
 angka_list = input_angka.split(",")
-if len(angka_list) != 20:
-    st.warning("Mohon masukkan 20 angka dipisahkan dengan koma.")
 angka_list = []
 for angka in angka_list:
     try:
@@ -58,6 +56,7 @@ option = st.sidebar.selectbox("Pilih Model", ["FOLDA-STOK", "FOLDA-PROFIT",
                             "VITACIMIN-STOK", "VITACMIN-PROFIT"])
 
 #button run
+button_pressed = False
 if st.sidebar.button("Forecast"):
     # Memproses input jika tombol "Run" ditekan
     button_pressed = True
