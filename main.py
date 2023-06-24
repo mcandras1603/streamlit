@@ -39,12 +39,15 @@ st.sidebar.write("Range nilai stok = 0 - Ratuan")
 
 #Input angka
 input_angka = st.sidebar.text_input("Masukkan 20 angka dipisahkan oleh koma:")
-angka_list = input_angka.split(",")
-for angka in angka_list:
+converted_list = input_angka.split(",")
+
+angka_list = []
+for convert in converted_list:
     try:
-        angka_list.append(int(angka.strip()))
+        angka_list.append(int(covert.strip()))
     except ValueError:
         pass
+
 st.write(angka_list)
 
 #pilih model
