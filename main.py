@@ -55,7 +55,7 @@ option = st.sidebar.selectbox("Pilih Model", ["FOLDA-STOK", "FOLDA-PROFIT",
                             "OBDHAMIN-STOK", "OBDHAMIN-PROFIT", 
                             "OBICAL-STOK", "OBICAL-PROFIT", 
                             "SOLANEURON-STOK", "SOLANEURON-PROFIT", 
-                            "VITACIMIN-STOK", "VITACMIN-PROFIT"])
+                            "VITACIMIN-STOK", "VITACIMIN-PROFIT"])
 
 #button run
 button_pressed = False
