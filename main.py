@@ -46,7 +46,7 @@ for convert in converted_list:
     try:
         angka_list.append(int(convert.strip()))
     except ValueError:
-        pass
+        st.write(f"Nilai '{convert.strip()}' bukan angka. Nilai tersebut akan diabaikan.")
 
 st.write(angka_list)
 
