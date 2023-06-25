@@ -32,8 +32,8 @@ import joblib
 import streamlit as st
 
 st.sidebar.title("MENU")
-st.sidebar.write("Range nilai profit = 0 - Jutaan")
-st.sidebar.write("Range nilai stok = 0 - Ratuan")
+kalimat = "Keterangan:<br>Input nilai profit memiliki range nilai 0 - Jutaan.<br>Untuk input nilai stok memiliki range nilai 0 - Ratusan<br>Tanggal yang digunakan merupakan<br>tanggal awal pada 20 minggu terakhir"
+st.sidebar.write(kalimat, unsafe_allow_html=True)
 
 #pro = [50000, 210000, 36000, 52000, 102100, 1900201, 20001, 15040 ,270210 ,401201, 60809, 5110819, 111213, 9808, 86998, 567260, 18788, 56732, 60887, 5062716]
 
