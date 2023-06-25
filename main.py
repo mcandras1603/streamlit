@@ -120,7 +120,7 @@ if st.sidebar.button("Forecast"):
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Vitacimin'
-        best_model = joblib.load('VS_lstm50_70p.pkl')
+        best_model = joblib.load('VS_lstm50_70p.joblib')
 
     tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
     data = pd.DataFrame({'date': tgl, 'profit':angka_list})
