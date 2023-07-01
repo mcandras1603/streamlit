@@ -33,10 +33,17 @@ import streamlit as st
 
 st.sidebar.title("MENU")
 
-
+# Sidebar untuk pilihan file CSV
 uploaded_file = st.sidebar.file_uploader("Pilih file dataset CSV", type="csv")
-data = pd.read_csv(uploaded_file)
-tgl = data['date']
+
+# Memuat dan mengubah dataset jika file diunggah
+if uploaded_file is not None:
+    data = pd.read_csv(uploaded_file)
+    data['stok'] = data['profit']
+    st.write(data)
+else:
+    st.write("Belum ada file yang diunggah.")
+
 angka_list = data['profit']
 
 st.write(angka_list)
