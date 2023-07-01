@@ -44,10 +44,6 @@ if uploaded_file is not None:
 else:
     st.write("Belum ada file yang diunggah.")
 
-angka_list = data['profit']
-
-st.write(angka_list)
-
 #pilih model
 option = st.sidebar.selectbox("Pilih Model", ["FOLDA-STOK", "FOLDA-PROFIT", 
                             "OBDHAMIN-STOK", "OBDHAMIN-PROFIT", 
