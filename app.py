@@ -35,20 +35,35 @@ st.sidebar.title("MENU")
 kalimat = "Keterangan:<br>Input nilai profit memiliki<br>range nilai 0 - Jutaan.<br>Untuk input nilai stok memiliki <br>range nilai 0 - Ratusan<br>Tanggal yang digunakan merupakan<br>tanggal awal pada 20 minggu terakhir"
 st.sidebar.write(kalimat, unsafe_allow_html=True)
 
-#pro = [50000, 210000, 36000, 52000, 102100, 1900201, 20001, 15040 ,270210 ,401201, 60809, 5110819, 111213, 9808, 86998, 567260, 18788, 56732, 60887, 5062716]
+#upload dataset csv
+uploaded_file = st.file_uploader("Pilih file dataset CSV", type="csv")
 
-#Input angka
-input_angka = st.sidebar.text_input("Masukkan 20 angka dipisahkan oleh koma:")
-converted_list = input_angka.split(",")
+if uploaded_file is not None:
+    data = pd.read_csv(uploaded_file)
 
-angka_list = []
-for convert in converted_list:
-    try:
-        angka_list.append(int(convert.strip()))
-    except ValueError:
-        st.write(f"Nilai '{convert.strip()}' bukan angka. Nilai tersebut akan diabaikan.")
+data['profit'] = (data['harga_jual'] - data['harga_beli'])*data['jumlah']
 
-st.write(angka_list)
+# drop baris
+data = data[data['jumlah'] != 0]
+data = data[data['profit'] != 0]
+
+#Create a Date Column to set up aggregation by month
+data['date'] = data.apply(lambda row: pd.Timestamp(row.tanggal) , axis = 1)
+data.drop('tanggal', inplace=True, axis=1)
+
+#aggregate by week
+data['date'] = pd.to_datetime(data['date']) - pd.to_timedelta(7, unit='d')
+data = data.groupby(pd.Grouper(key='date', freq='W-MON', sort=True)).sum().reset_index()
+
+# interpolasi nilai 0
+data['profit'] = data['profit'].replace(0, np.nan)
+data['profit'] = data['profit'].interpolate(method="linear")
+
+data['jumlah'] = data['jumlah'].replace(0, np.nan)
+data['jumlah'] = data['jumlah'].interpolate(method="linear")
+data = data.rename(columns = {'jumlah':'stok'}, inplace = False)
+
+original = data
 
 #pilih model
 option = st.sidebar.selectbox("Pilih Model", ["FOLDA-STOK", "FOLDA-PROFIT", 
@@ -62,73 +77,100 @@ button_pressed = False
 if st.sidebar.button("Forecast"):
     # Memproses input jika tombol "Run" ditekan
     button_pressed = True
-    if angka_list and option == "FOLDA-STOK":
+    if uploaded_file and option == "FOLDA-STOK":
         st.sidebar.write("Opsi yang dipilih: FOLDA-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Folda'
         best_model = joblib.load('FK_lstm100_70s.pkl')
+        diff_data = 'stok_diff'
+        atribut = 'stok'
+        pick = stok
         
-    elif angka_list and option == "FOLDA-PROFIT":
+    elif uploaded_file and option == "FOLDA-PROFIT":
         st.sidebar.write("Opsi yang dipilih: FOLDA-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Folda'
         best_model = joblib.load('FK_lstm100_70p.pkl')
+        diff_data = 'profit_diff'
+        atribut = 'profit'
+        pick = profit
 
-    elif angka_list and option == "OBDHAMIN-STOK":
+    elif uploaded_file and option == "OBDHAMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obdhamin'
         best_model = joblib.load('OK_lstm50_70s.pkl')
+        diff_data = 'stok_diff'
+        atribut = 'stok'
+        pick = stok
     
-    elif angka_list and option == "OBDHAMIN-PROFIT":
+    elif uploaded_file and option == "OBDHAMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Obdhamin'
         best_model = joblib.load('OK_lstm50_70p.pkl')
+        diff_data = 'profit_diff'
+        atribut = 'profit'
+        pick = profit
     
-    elif angka_list and option == "OBICAL-STOK":
+    elif uploaded_file and option == "OBICAL-STOK":
         st.sidebar.write("Opsi yang dipilih: OBICAL-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obical'
         best_model = joblib.load('OT_lstm100_70s.joblib')
+        diff_data = 'stok_diff'
+        atribut = 'stok'
+        pick = stok
     
-    elif angka_list and option == "OBICAL-PROFIT":
+    elif uploaded_file and option == "OBICAL-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBICAL-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Obical'
         best_model = joblib.load('OT_lstm100_70p.pkl')
+        diff_data = 'profit_diff'
+        atribut = 'profit'
+        pick = profit
     
-    elif angka_list and option == "SOLANEURON-STOK":
+    elif uploaded_file and option == "SOLANEURON-STOK":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Solaneuron'
         best_model = joblib.load('SK_lstm100_70s.pkl')
+        diff_data = 'stok_diff'
+        atribut = 'stok'
+        pick = stok
     
-    elif angka_list and option == "SOLANEURON-PROFIT":
+    elif uploaded_file and option == "SOLANEURON-PROFIT":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Solaneuron'
         best_model = joblib.load('SK_lstm100_70p.joblib')
+        diff_data = 'profit_diff'
+        atribut = 'profit'
+        pick = profit
     
-    elif angka_list and option == "VITACIMIN-STOK":
+    elif uploaded_file and option == "VITACIMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Vitacimin'
         best_model = joblib.load('VS_lstm50_70s.pkl')
+        diff_data = 'stok_diff'
+        atribut = 'stok'
+        pick = stok
     
-    elif angka_list and option == "VITACIMIN-PROFIT":
+    elif uploaded_file and option == "VITACIMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Vitacimin'
         best_model = joblib.load('VS_lstm50_70p.joblib')
+        diff_data = 'profit_diff'
+        atribut = 'profit'
+        pick = profit
 
-    tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
-    data = pd.DataFrame({'date': tgl, 'profit':angka_list})
-    original = data
             
     #stasionery
     def get_diff(data):
-        data['profit_diff'] = data.profit.diff()
+        data[diff_data] = data.pick.diff()
         data = data.dropna()
         return data
             
@@ -141,7 +183,7 @@ if st.sidebar.button("Forecast"):
         #create column for each lag
         for i in range(1,5):
             col_name = 'lag_' + str(i)
-            supervised_df[col_name] = supervised_df['profit_diff'].shift(i)
+            supervised_df[col_name] = supervised_df[diff_data].shift(i)
             
         #drop null values
         supervised_df = supervised_df.dropna().reset_index(drop=True)
@@ -151,7 +193,7 @@ if st.sidebar.button("Forecast"):
             
     #Sampel Data
     def tts(data):
-        data = data.drop(['profit', 'date'], axis=1)
+        data = data.drop([atribut, 'date'], axis=1)
         test = data.sample(n=10, random_state=12).values
         return test
             
@@ -203,14 +245,14 @@ if st.sidebar.button("Forecast"):
     def predict_df(unscaled_predictions, original_df):
         #create dataframe that shows the predicted sales
         result_list = []
-        profit_dates = list(original_df[-11:].date)
-        act_profit = list(original_df[-11:].profit)
+        atribut_dates = list(original_df[-11:].date)
+        act_atribut = list(original_df[-11:].atribut)
             
         for index in range(len(unscaled_predictions)):
             result_dict = {}
-            result_dict['pred_value'] = int(unscaled_predictions[index][0] + act_profit[index])
-            if index+1 < len(profit_dates):
-                result_dict['date'] = profit_dates[index+1]
+            result_dict['pred_value'] = int(unscaled_predictions[index][0] + act_atribut[index])
+            if index+1 < len(atribut_dates):
+                result_dict['date'] = atribut_dates[index+1]
             else:
                 result_dict['date'] = None
             result_list.append(result_dict)
@@ -255,14 +297,14 @@ if st.sidebar.button("Forecast"):
         fig, ax = plt.subplots(figsize=(20, 12))
             
         original_dates = pd.to_datetime(original_df['date'], format='%Y-%m-%d', errors='coerce')  # Convert to datetime type
-        plt.plot(original_dates, original_df['profit'], label='Aktual', color='green', marker='o')
+        plt.plot(original_dates, original_df[pick], label='Aktual', color='green', marker='o')
             
         future_dates = pd.to_datetime(unscaled_df['date'].tail(future_steps), format='%Y-%m-%d', errors='coerce')  # Convert to datetime type
         future_values = unscaled_df['pred_value'].tail(future_steps)
         plt.plot(future_dates, future_values, label='Prediksi Masa Depan', color='orange', marker='o')
             
         plt.plot([original_dates.iloc[-1], future_dates.iloc[0]],
-                    [original_df['profit'].iloc[-1], future_values.iloc[0]],
+                    [original_df[pick].iloc[-1], future_values.iloc[0]],
                     linestyle='solid', color='orange')
         st.write("Hasil Peramalan Masa Depan")
         st.write(unscaled_df.tail(5))
