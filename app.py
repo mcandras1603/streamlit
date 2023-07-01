@@ -72,7 +72,7 @@ if st.sidebar.button("Forecast"):
         label_title = 'Peramalan Profit Folda'
         best_model = joblib.load('FK_lstm100_70p.pkl')
 
-    elif angka_list and option == "OBDHAMIN-STOK":
+    elif option == "OBDHAMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obdhamin'
