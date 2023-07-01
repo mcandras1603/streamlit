@@ -52,103 +52,73 @@ if st.sidebar.button("Forecast"):
     button_pressed = True
     
     data = pd.read_csv(uploaded_file)
-    data['profit'] = (data['harga_jual'] - data['harga_beli'])*data['jumlah']
-
-    # drop baris
-    data = data[data['jumlah'] != 0]
-    data = data[data['profit'] != 0]
-    
-    #Create a Date Column to set up aggregation by month
-    data['date'] = data.apply(lambda row: pd.Timestamp(row.tanggal) , axis = 1)
-    data.drop('tanggal', inplace=True, axis=1)
-    
-    #aggregate by week
-    data['date'] = pd.to_datetime(data['date']) - pd.to_timedelta(7, unit='d')
-    data = data.groupby(pd.Grouper(key='date', freq='W-MON', sort=True)).sum().reset_index()
-    
-    # interpolasi nilai 0
-    data['profit'] = data['profit'].replace(0, np.nan)
-    data['profit'] = data['profit'].interpolate(method="linear")
-    
-    data['jumlah'] = data['jumlah'].replace(0, np.nan)
-    data['jumlah'] = data['jumlah'].interpolate(method="linear")
-    data = data.rename(columns = {'jumlah':'stok'}, inplace = False)
+    data['stok'] = data['profit']
   
     if uploaded_file and option == "FOLDA-STOK":
         st.sidebar.write("Opsi yang dipilih: FOLDA-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Folda'
         best_model = joblib.load('FK_lstm100_70s.pkl')
-        atribut = data['stok']
         
     elif uploaded_file and option == "FOLDA-PROFIT":
         st.sidebar.write("Opsi yang dipilih: FOLDA-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Folda'
         best_model = joblib.load('FK_lstm100_70p.pkl')
-        atribut = data['profit']
       
     elif uploaded_file and option == "OBDHAMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obdhamin'
         best_model = joblib.load('OK_lstm50_70s.pkl')
-        atribut = data['stok']
 
     elif uploaded_file and option == "OBDHAMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Obdhamin'
         best_model = joblib.load('OK_lstm50_70p.pkl')
-        atribut = data['profit']
     
     elif uploaded_file and option == "OBICAL-STOK":
         st.sidebar.write("Opsi yang dipilih: OBICAL-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obical'
         best_model = joblib.load('OT_lstm100_70s.joblib')
-        atribut = data['stok']
     
     elif uploaded_file and option == "OBICAL-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBICAL-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Obical'
         best_model = joblib.load('OT_lstm100_70p.pkl')
-        atribut = data['profit']
     
     elif uploaded_file and option == "SOLANEURON-STOK":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Solaneuron'
         best_model = joblib.load('SK_lstm100_70s.pkl')
-        atribut = data['stok']
     
     elif uploaded_file and option == "SOLANEURON-PROFIT":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Solaneuron'
         best_model = joblib.load('SK_lstm100_70p.joblib')
-        atribut = data['stok']
     
     elif uploaded_file and option == "VITACIMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Vitacimin'
         best_model = joblib.load('VS_lstm50_70s.pkl')
-        atribut = data['stok']
     
     elif uploaded_file and option == "VITACIMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Vitacimin'
         best_model = joblib.load('VS_lstm50_70p.joblib')
-        atribut = data['profit']
     
     original = data
 
     #stasionery
     def get_diff(data):
-        data['diff_data'] = atribut.diff()
+        data['profit_diff'] = data.profit.diff()
         data = data.dropna()
         return data
             
@@ -161,7 +131,7 @@ if st.sidebar.button("Forecast"):
         #create column for each lag
         for i in range(1,5):
             col_name = 'lag_' + str(i)
-            supervised_df[col_name] = supervised_df['diff_data'].shift(i)
+            supervised_df[col_name] = supervised_df['profit_diff'].shift(i)
             
         #drop null values
         supervised_df = supervised_df.dropna().reset_index(drop=True)
@@ -171,7 +141,7 @@ if st.sidebar.button("Forecast"):
             
     #Sampel Data
     def tts(data):
-        data = data.drop([atribut, 'date'], axis=1)
+        data = data.drop(['profit', 'date'], axis=1)
         test = data.sample(n=10, random_state=12).values
         return test
             
@@ -229,7 +199,7 @@ if st.sidebar.button("Forecast"):
         for index in range(len(unscaled_predictions)):
             result_dict = {}
             result_dict['pred_value'] = int(unscaled_predictions[index][0] + act_profit[index])
-            if index+1 < len(atribut_dates):
+            if index+1 < len(profit_dates):
                 result_dict['date'] = profit_dates[index+1]
             else:
                 result_dict['date'] = None
