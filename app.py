@@ -60,13 +60,13 @@ button_pressed = False
 if st.sidebar.button("Forecast"):
     # Memproses input jika tombol "Run" ditekan
     button_pressed = True
-    if angka_list and option == "FOLDA-STOK":
+    if option == "FOLDA-STOK":
         st.sidebar.write("Opsi yang dipilih: FOLDA-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Folda'
         best_model = joblib.load('FK_lstm100_70s.pkl')
         
-    elif angka_list and option == "FOLDA-PROFIT":
+    elif option == "FOLDA-PROFIT":
         st.sidebar.write("Opsi yang dipilih: FOLDA-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Folda'
@@ -78,43 +78,43 @@ if st.sidebar.button("Forecast"):
         label_title = 'Peramalan Stok Obdhamin'
         best_model = joblib.load('OK_lstm50_70s.pkl')
     
-    elif angka_list and option == "OBDHAMIN-PROFIT":
+    elif option == "OBDHAMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Obdhamin'
         best_model = joblib.load('OK_lstm50_70p.pkl')
     
-    elif angka_list and option == "OBICAL-STOK":
+    elif option == "OBICAL-STOK":
         st.sidebar.write("Opsi yang dipilih: OBICAL-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obical'
         best_model = joblib.load('OT_lstm100_70s.joblib')
     
-    elif angka_list and option == "OBICAL-PROFIT":
+    elif option == "OBICAL-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBICAL-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Obical'
         best_model = joblib.load('OT_lstm100_70p.pkl')
     
-    elif angka_list and option == "SOLANEURON-STOK":
+    elif option == "SOLANEURON-STOK":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Solaneuron'
         best_model = joblib.load('SK_lstm100_70s.pkl')
     
-    elif angka_list and option == "SOLANEURON-PROFIT":
+    elif option == "SOLANEURON-PROFIT":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Solaneuron'
         best_model = joblib.load('SK_lstm100_70p.joblib')
     
-    elif angka_list and option == "VITACIMIN-STOK":
+    elif option == "VITACIMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Vitacimin'
         best_model = joblib.load('VS_lstm50_70s.pkl')
     
-    elif angka_list and option == "VITACIMIN-PROFIT":
+    elif option == "VITACIMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Vitacimin'
