@@ -84,7 +84,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('FK_lstm100_70s.pkl')
         diff_data = 'stok_diff'
         atribut = 'stok'
-        pick = stok
+        pick = 'stok'
         
     elif uploaded_file and option == "FOLDA-PROFIT":
         st.sidebar.write("Opsi yang dipilih: FOLDA-PROFIT")
@@ -93,7 +93,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('FK_lstm100_70p.pkl')
         diff_data = 'profit_diff'
         atribut = 'profit'
-        pick = profit
+        pick = 'profit'
 
     elif uploaded_file and option == "OBDHAMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-STOK")
@@ -102,7 +102,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('OK_lstm50_70s.pkl')
         diff_data = 'stok_diff'
         atribut = 'stok'
-        pick = stok
+        pick = 'stok'
     
     elif uploaded_file and option == "OBDHAMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-PROFIT")
@@ -111,7 +111,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('OK_lstm50_70p.pkl')
         diff_data = 'profit_diff'
         atribut = 'profit'
-        pick = profit
+        pick = 'profit'
     
     elif uploaded_file and option == "OBICAL-STOK":
         st.sidebar.write("Opsi yang dipilih: OBICAL-STOK")
@@ -120,7 +120,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('OT_lstm100_70s.joblib')
         diff_data = 'stok_diff'
         atribut = 'stok'
-        pick = stok
+        pick = 'stok'
     
     elif uploaded_file and option == "OBICAL-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBICAL-PROFIT")
@@ -129,7 +129,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('OT_lstm100_70p.pkl')
         diff_data = 'profit_diff'
         atribut = 'profit'
-        pick = profit
+        pick = 'profit'
     
     elif uploaded_file and option == "SOLANEURON-STOK":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-STOK")
@@ -138,7 +138,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('SK_lstm100_70s.pkl')
         diff_data = 'stok_diff'
         atribut = 'stok'
-        pick = stok
+        pick = 'stok'
     
     elif uploaded_file and option == "SOLANEURON-PROFIT":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-PROFIT")
@@ -147,7 +147,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('SK_lstm100_70p.joblib')
         diff_data = 'profit_diff'
         atribut = 'profit'
-        pick = profit
+        pick = 'profit'
     
     elif uploaded_file and option == "VITACIMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-STOK")
@@ -156,7 +156,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('VS_lstm50_70s.pkl')
         diff_data = 'stok_diff'
         atribut = 'stok'
-        pick = stok
+        pick = 'stok'
     
     elif uploaded_file and option == "VITACIMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-PROFIT")
@@ -165,7 +165,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('VS_lstm50_70p.joblib')
         diff_data = 'profit_diff'
         atribut = 'profit'
-        pick = profit
+        pick = 'profit'
 
             
     #stasionery
