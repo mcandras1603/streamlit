@@ -35,8 +35,20 @@ st.sidebar.title("MENU")
 kalimat = "Keterangan:<br>Input nilai profit memiliki<br>range nilai 0 - Jutaan.<br>Untuk input nilai stok memiliki <br>range nilai 0 - Ratusan<br>Tanggal yang digunakan merupakan<br>tanggal awal pada 20 minggu terakhir"
 st.sidebar.write(kalimat, unsafe_allow_html=True)
 
-#upload dataset csv
-uploaded_file = st.sidebar.file_uploader("Pilih file dataset CSV", type="csv")
+#pro = [50000, 210000, 36000, 52000, 102100, 1900201, 20001, 15040 ,270210 ,401201, 60809, 5110819, 111213, 9808, 86998, 567260, 18788, 56732, 60887, 5062716]
+
+#Input angka
+input_angka = st.sidebar.text_input("Masukkan 20 angka dipisahkan oleh koma:")
+converted_list = input_angka.split(",")
+
+angka_list = []
+for convert in converted_list:
+    try:
+        angka_list.append(int(convert.strip()))
+    except ValueError:
+        st.write(f"Nilai '{convert.strip()}' bukan angka. Nilai tersebut akan diabaikan.")
+
+st.write(angka_list)
 
 #pilih model
 option = st.sidebar.selectbox("Pilih Model", ["FOLDA-STOK", "FOLDA-PROFIT", 
@@ -50,72 +62,70 @@ button_pressed = False
 if st.sidebar.button("Forecast"):
     # Memproses input jika tombol "Run" ditekan
     button_pressed = True
-    
-    data = pd.read_csv(uploaded_file)
-    data['stok'] = data['profit']
-  
-    if uploaded_file and option == "FOLDA-STOK":
+    if angka_list and option == "FOLDA-STOK":
         st.sidebar.write("Opsi yang dipilih: FOLDA-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Folda'
         best_model = joblib.load('FK_lstm100_70s.pkl')
         
-    elif uploaded_file and option == "FOLDA-PROFIT":
+    elif angka_list and option == "FOLDA-PROFIT":
         st.sidebar.write("Opsi yang dipilih: FOLDA-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Folda'
         best_model = joblib.load('FK_lstm100_70p.pkl')
-      
-    elif uploaded_file and option == "OBDHAMIN-STOK":
+
+    elif angka_list and option == "OBDHAMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obdhamin'
         best_model = joblib.load('OK_lstm50_70s.pkl')
-
-    elif uploaded_file and option == "OBDHAMIN-PROFIT":
+    
+    elif angka_list and option == "OBDHAMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBDHAMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Obdhamin'
         best_model = joblib.load('OK_lstm50_70p.pkl')
     
-    elif uploaded_file and option == "OBICAL-STOK":
+    elif angka_list and option == "OBICAL-STOK":
         st.sidebar.write("Opsi yang dipilih: OBICAL-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obical'
         best_model = joblib.load('OT_lstm100_70s.joblib')
     
-    elif uploaded_file and option == "OBICAL-PROFIT":
+    elif angka_list and option == "OBICAL-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBICAL-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Obical'
         best_model = joblib.load('OT_lstm100_70p.pkl')
     
-    elif uploaded_file and option == "SOLANEURON-STOK":
+    elif angka_list and option == "SOLANEURON-STOK":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Solaneuron'
         best_model = joblib.load('SK_lstm100_70s.pkl')
     
-    elif uploaded_file and option == "SOLANEURON-PROFIT":
+    elif angka_list and option == "SOLANEURON-PROFIT":
         st.sidebar.write("Opsi yang dipilih: SOLANEURON-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Solaneuron'
         best_model = joblib.load('SK_lstm100_70p.joblib')
     
-    elif uploaded_file and option == "VITACIMIN-STOK":
+    elif angka_list and option == "VITACIMIN-STOK":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Vitacimin'
         best_model = joblib.load('VS_lstm50_70s.pkl')
     
-    elif uploaded_file and option == "VITACIMIN-PROFIT":
+    elif angka_list and option == "VITACIMIN-PROFIT":
         st.sidebar.write("Opsi yang dipilih: VITACIMIN-PROFIT")
         label_y = 'Juta (Rupiah)'
         label_title = 'Peramalan Profit Vitacimin'
         best_model = joblib.load('VS_lstm50_70p.joblib')
-    
-    original = data
 
+    tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
+    data = pd.DataFrame({'date': tgl, 'profit':angka_list})
+    original = data
+            
     #stasionery
     def get_diff(data):
         data['profit_diff'] = data.profit.diff()
