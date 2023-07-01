@@ -38,33 +38,6 @@ st.sidebar.write(kalimat, unsafe_allow_html=True)
 #upload dataset csv
 uploaded_file = st.file_uploader("Pilih file dataset CSV", type="csv")
 
-if uploaded_file is not None:
-    data = pd.read_csv(uploaded_file)
-
-data['profit'] = (data['harga_jual'] - data['harga_beli'])*data['jumlah']
-
-# drop baris
-data = data[data['jumlah'] != 0]
-data = data[data['profit'] != 0]
-
-#Create a Date Column to set up aggregation by month
-data['date'] = data.apply(lambda row: pd.Timestamp(row.tanggal) , axis = 1)
-data.drop('tanggal', inplace=True, axis=1)
-
-#aggregate by week
-data['date'] = pd.to_datetime(data['date']) - pd.to_timedelta(7, unit='d')
-data = data.groupby(pd.Grouper(key='date', freq='W-MON', sort=True)).sum().reset_index()
-
-# interpolasi nilai 0
-data['profit'] = data['profit'].replace(0, np.nan)
-data['profit'] = data['profit'].interpolate(method="linear")
-
-data['jumlah'] = data['jumlah'].replace(0, np.nan)
-data['jumlah'] = data['jumlah'].interpolate(method="linear")
-data = data.rename(columns = {'jumlah':'stok'}, inplace = False)
-
-original = data
-
 #pilih model
 option = st.sidebar.selectbox("Pilih Model", ["FOLDA-STOK", "FOLDA-PROFIT", 
                             "OBDHAMIN-STOK", "OBDHAMIN-PROFIT", 
@@ -167,6 +140,30 @@ if st.sidebar.button("Forecast"):
         atribut = 'profit'
         pick = 'profit'
 
+    data = pd.read_csv(uploaded_file)
+    data['profit'] = (data['harga_jual'] - data['harga_beli'])*data['jumlah']
+
+    # drop baris
+    data = data[data['jumlah'] != 0]
+    data = data[data['profit'] != 0]
+    
+    #Create a Date Column to set up aggregation by month
+    data['date'] = data.apply(lambda row: pd.Timestamp(row.tanggal) , axis = 1)
+    data.drop('tanggal', inplace=True, axis=1)
+    
+    #aggregate by week
+    data['date'] = pd.to_datetime(data['date']) - pd.to_timedelta(7, unit='d')
+    data = data.groupby(pd.Grouper(key='date', freq='W-MON', sort=True)).sum().reset_index()
+    
+    # interpolasi nilai 0
+    data['profit'] = data['profit'].replace(0, np.nan)
+    data['profit'] = data['profit'].interpolate(method="linear")
+    
+    data['jumlah'] = data['jumlah'].replace(0, np.nan)
+    data['jumlah'] = data['jumlah'].interpolate(method="linear")
+    data = data.rename(columns = {'jumlah':'stok'}, inplace = False)
+    
+    original = data
             
     #stasionery
     def get_diff(data):
