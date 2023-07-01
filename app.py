@@ -117,6 +117,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('VS_lstm50_70p.joblib')
 
     tgl = data['date']
+    angka_list = data['profit']
     data = pd.DataFrame({'date': tgl, 'profit':angka_list})
     original = data
             
