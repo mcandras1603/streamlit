@@ -32,13 +32,11 @@ import joblib
 import streamlit as st
 
 st.sidebar.title("MENU")
-kalimat = "Keterangan:<br>Input nilai profit memiliki<br>range nilai 0 - Jutaan.<br>Untuk input nilai stok memiliki <br>range nilai 0 - Ratusan<br>Tanggal yang digunakan merupakan<br>tanggal awal pada 20 minggu terakhir"
+kalimat = "Keterangan:<br>Input nilai profit memiliki<br>range nilai 0 - Jutaan.<br>Untuk input nilai stok memiliki <br>range nilai 0 - Ratusan<br>Tanggal yang digunakan merupakan<br>tanggal awal pada 15 minggu terakhir"
 st.sidebar.write(kalimat, unsafe_allow_html=True)
 
-#pro = [50000, 210000, 36000, 52000, 102100, 1900201, 20001, 15040 ,270210 ,401201, 60809, 5110819, 111213, 9808, 86998, 567260, 18788, 56732, 60887, 5062716]
-
 #Input angka
-input_angka = st.sidebar.text_input("Masukkan 20 angka dipisahkan oleh koma:")
+input_angka = st.sidebar.text_input("Masukkan 15 angka dipisahkan oleh koma:")
 converted_list = input_angka.split(",")
 
 angka_list = []
@@ -122,7 +120,7 @@ if st.sidebar.button("Forecast"):
         label_title = 'Peramalan Profit Vitacimin'
         best_model = joblib.load('VS_lstm50_70p.joblib')
 
-    tgl = ['2021-02-01','2021-02-08','2021-02-15' ,'2021-02-22' ,'2021-03-01' ,'2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
+    tgl = ['2021-03-08' ,'2021-03-15' ,'2021-03-22','2021-03-29','2021-04-05','2021-04-12', '2021-04-19', '2021-04-26', '2021-05-03', '2021-05-10', '2021-05-17', '2021-05-24', '2021-05-31', '2021-06-07', '2021-06-14']
     data = pd.DataFrame({'date': tgl, 'profit':angka_list})
     original = data
             
