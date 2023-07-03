@@ -42,6 +42,7 @@ if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
     if 'stok' in data.columns:
         data['atribut'] = data['stok']
+        st.write(data)
     elif 'profit' in data.columns:
         data['atribut'] = data['profit']
         st.write(data)
