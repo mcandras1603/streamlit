@@ -39,8 +39,7 @@ uploaded_file = st.sidebar.file_uploader("Pilih file dataset CSV", type="csv")
 # Memuat dan mengubah dataset jika file diunggah
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
-    data['atribut'] = data['profit']
-    data['atribut'] = data['profit']
+    data['stok'] = data['profit']
     st.write(data)
 else:
     st.write("Belum ada file yang diunggah.")
@@ -118,7 +117,7 @@ if st.sidebar.button("Forecast"):
         best_model = joblib.load('VS_lstm50_70p.joblib')
 
     tgl = data['date']
-    angka_list = data['atribut']
+    angka_list = data['profit']
     data = pd.DataFrame({'date': tgl, 'profit':angka_list})
     original = data
             
