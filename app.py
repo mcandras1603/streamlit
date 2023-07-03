@@ -34,6 +34,7 @@ import streamlit as st
 st.sidebar.title("MENU")
 
 # Sidebar untuk pilihan file CSV
+st.sidebar.write("Data test yang digunakan adalah 40 data terakhir")
 uploaded_file = st.sidebar.file_uploader("Pilih file dataset CSV", type="csv")
 
 # Memuat dan mengubah dataset jika file diunggah
