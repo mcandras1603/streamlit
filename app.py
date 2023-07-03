@@ -152,7 +152,7 @@ if st.sidebar.button("Forecast"):
     #Sampel Data
     def tts(data):
         data = data.drop(['profit', 'date'], axis=1)
-        test = data.sample(n=10, random_state=12).values
+        test = data.sample(n=40, random_state=12).values
         return test
             
     test = tts(model_df)
@@ -203,8 +203,8 @@ if st.sidebar.button("Forecast"):
     def predict_df(unscaled_predictions, original_df):
         #create dataframe that shows the predicted sales
         result_list = []
-        profit_dates = list(original_df[-11:].date)
-        act_profit = list(original_df[-11:].profit)
+        profit_dates = list(original_df[-41:].date)
+        act_profit = list(original_df[-41:].profit)
             
         for index in range(len(unscaled_predictions)):
             result_dict = {}
