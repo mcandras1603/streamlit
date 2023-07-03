@@ -39,8 +39,8 @@ uploaded_file = st.sidebar.file_uploader("Pilih file dataset CSV", type="csv")
 # Memuat dan mengubah dataset jika file diunggah
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
-    data['stok'] = data['atribut']
-    data['profit'] = data['atribut']
+    data['atribut'] = data['stok']
+    data['atribut'] = data['profit']
     st.write(data)
 else:
     st.write("Belum ada file yang diunggah.")
