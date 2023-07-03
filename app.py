@@ -152,7 +152,7 @@ if st.sidebar.button("Forecast"):
     #Sampel Data
     def tts(data):
         data = data.drop(['profit', 'date'], axis=1)
-        test = data.sample(n=40, random_state=12).values
+        test = data.sample(n=40, random_state=42).values
         return test
             
     test = tts(model_df)
