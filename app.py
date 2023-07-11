@@ -15,6 +15,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.layers import LSTM
 from sklearn.model_selection import KFold, cross_val_score, train_test_split
+from keras.models import load_model
 
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -67,7 +68,7 @@ if st.sidebar.button("Forecast"):
         st.sidebar.write("Opsi yang dipilih: FOLDA-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Folda'
-        best_model = joblib.load('FK_lstm100_70s.pkl')
+        best_model = load_model('FK_lstm100_70s.pkl')
         
     elif option == "FOLDA-PROFIT":
         st.sidebar.write("Opsi yang dipilih: FOLDA-PROFIT")
