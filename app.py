@@ -91,7 +91,7 @@ if st.sidebar.button("Forecast"):
         st.sidebar.write("Opsi yang dipilih: OBICAL-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Obical'
-        best_model = joblib.load('OT_lstm100_70s.joblib')
+        best_model = joblib.load('OT_lstm100_70s.pkl')
     
     elif option == "OBICAL-PROFIT":
         st.sidebar.write("Opsi yang dipilih: OBICAL-PROFIT")
