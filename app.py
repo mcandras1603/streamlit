@@ -67,7 +67,7 @@ if st.sidebar.button("Forecast"):
         st.sidebar.write("Opsi yang dipilih: FOLDA-STOK")
         label_y = 'Jumlah (Ratusan)'
         label_title = 'Peramalan Stok Folda'
-        best_model = keras.models.load_model('FK_lstm100_70s.pkl')
+        best_model = joblib.load()('FK_lstm100_70s.pkl')
         
     elif option == "FOLDA-PROFIT":
         st.sidebar.write("Opsi yang dipilih: FOLDA-PROFIT")
